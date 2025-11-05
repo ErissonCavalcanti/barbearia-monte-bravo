@@ -1,0 +1,222 @@
+.containerBanner {
+background-image: url("/banner_mobile.webp");
+  width: 100%;
+  height: 70vh;
+  margin: 0 auto;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden; /* garante que conteúdo extra não apareça fora do container */
+}
+.simboloBanner {
+  position: absolute;
+  object-fit: cover;
+  max-width: 100vw; /* mobile-first: largura relativa */
+  height: 45vh;
+  z-index: 8; /* abaixo do botão */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -85%);
+}
+
+/* garante que a imagem do banner fique atrás */
+.containerBanner > img,
+.containerBanner .bannerImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+:active,
+:hover,
+:focus {
+  outline: 0 !important;
+  outline-offset: 0;
+}
+::before,
+::after {
+  position: absolute;
+  content: "";
+}
+.btn {
+  position: absolute; /* mudou de relative para absolute para ficar sobre a imagem */
+  left: 50%;
+  transform: translateX(-50%); /* centraliza horizontalmente */
+  top: 53%; /* ajuste este valor para posicionar verticalmente (p.ex. top: 50% para centralizar verticalmente) */
+  display: inline-block;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0; /* removida margem que atrapalhava o centralizado */
+  min-width: 150px;
+  z-index: 20; /* acima da imagem, abaixo do menu */
+}
+
+.btn span {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 20px;
+  transition: 0.3s;
+}
+
+/* Pseudo-elementos (requerem a sintaxe global no CSS Modules) */
+:global(.btn)::before,
+:global(.btn)::after {
+  position: absolute;
+  content: "";
+}
+
+/* --- Estilos específicos do .btn-3 --- */
+.btn-3 {
+  padding: 5px;
+}
+.btn-3 span {
+  font-family: "Cormorant Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+}
+.btn-3::before,
+.btn-3::after {
+  background: transparent;
+  z-index: 2;
+}
+
+/* --- Estilos específicos do .hover-border-5 --- */
+.hover-border-5::before,
+.hover-border-5::after {
+  width: 0%;
+  height: 0%;
+  opacity: 0;
+}
+.hover-border-5::before {
+  top: 0;
+  right: 0;
+  border-top: 1px solid rgb(255, 255, 255);
+  border-left: 1px solid rgb(255, 255, 255);
+  transition: width 0.2s 0.5s ease-out, height 0.15s 0.35s linear,
+    opacity 0s 0.7s;
+}
+.hover-border-5::after {
+  bottom: 0;
+  left: 0px;
+  border-bottom: 1px solid rgb(255, 255, 255);
+  border-right: 1px solid rgb(255, 255, 255);
+  transition: width 0.2s 0.15s linear, height 0.15s ease-in, opacity 0s 0.35s;
+}
+.hover-border-5:hover::before,
+.hover-border-5:hover::after {
+  width: 100%;
+  height: 96%;
+  opacity: 1;
+}
+.hover-border-5:hover::before {
+  transition: width 0.2s ease-in, height 0.15s 0.2s linear, opacity 0s;
+}
+.hover-border-5:hover::after {
+  transition: width 0.2s 0.35s linear, height 0.15s 0.5s ease-out,
+    opacity 0s 0.3s;
+}
+
+/* burger menu */
+
+/* ajusta z-index do ícone de menu (já existente .menu no seu arquivo) */
+.menu {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2.5rem;
+  color: #fff;
+  z-index: 60; /* aumentado para ficar acima de outros elementos */
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* botão do menu (ícone) */
+.menuBtn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 70; /* acima de tudo */
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 2.2rem;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* menu de navegação (overlay mobile-first) */
+.navMenu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  transform: translateY(-8%); /* leve offset inicial para animação */
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.32s;
+  z-index: 65;
+  pointer-events: none;
+}
+
+.navMenu.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.navMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.navMenu li {
+  margin: 0.6rem 0;
+}
+
+.navMenu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+}
+
+/* foco acessível sem remover outlines globais */
+.menuBtn:focus-visible,
+.navMenu a:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
