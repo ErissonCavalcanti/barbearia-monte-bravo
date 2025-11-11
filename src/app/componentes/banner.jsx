@@ -7,6 +7,7 @@ import monte_bravo_banner from "../../../public/monte_bravo_banner.webp";
 import { TbMenu3 } from "react-icons/tb";
 import { IoCloseOutline } from "react-icons/io5";
 import styles from "../styles/banner.module.css";
+import monte_bravo_nav from "../../../public/monte_bravo_nav.svg";
 
 export default function Banner() {
   const buttonRef = useRef(null);
@@ -100,14 +101,13 @@ export default function Banner() {
       
         <div
          className={styles.containerBanner}
-         role="img"
-         aria-label="Banner Barbearia Monte Bravo"
       />
       
       <Image
         src={monte_bravo_banner}
         className={styles.simboloBanner}
-        alt=" Logo Barbearia Monte Bravo "
+        alt="Logo Barbearia Monte Bravo"
+        title="Barbearia Monte Bravo"
       />
 
       {/* Botão do menu (agora renderiza os dois ícones e controla exibição via estado) */}
@@ -147,6 +147,15 @@ export default function Banner() {
         role="navigation"
         aria-hidden={!isMenuOpen}
       >
+        <div >
+          <Image
+            className={styles.monte_bravo_nav}
+            src={monte_bravo_nav}
+            alt="Logo Barbearia Monte Bravo"
+            title="Barbearia Monte Bravo"
+
+          />
+        </div>
         <ul>
           <li>
             <a href="#sobre" onClick={handleLinkClick}>
@@ -177,7 +186,7 @@ export default function Banner() {
         className={`${styles.btn} ${styles["btn-3"]} ${styles["hover-border-5"]}`}
       >
         <span id="marcar-agendamento">
-          <a>Marque já</a>
+          Marque já
         </span>
       </button>
     </header>

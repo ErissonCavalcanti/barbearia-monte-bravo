@@ -1,5 +1,5 @@
 .containerBanner {
-background-image: url("/banner_mobile.webp");
+  background-image: url("/banner_mobile.webp");
   width: 100%;
   height: 70vh;
   margin: 0 auto;
@@ -53,7 +53,6 @@ background-image: url("/banner_mobile.webp");
   border: none;
   cursor: pointer;
   margin: 0; /* removida margem que atrapalhava o centralizado */
-  min-width: 150px;
   z-index: 20; /* acima da imagem, abaixo do menu */
 }
 
@@ -62,7 +61,7 @@ background-image: url("/banner_mobile.webp");
   display: inline-block;
   font-size: 14px;
   font-weight: bold;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   top: 0;
   left: 0;
@@ -88,7 +87,7 @@ background-image: url("/banner_mobile.webp");
   font-weight: 700;
   font-style: normal;
   color: rgb(0, 0, 0);
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(247, 242, 242);
 }
 .btn-3::before,
 .btn-3::after {
@@ -156,7 +155,7 @@ background-image: url("/banner_mobile.webp");
   position: absolute;
   top: 18px;
   right: 18px;
-  z-index: 70; /* acima de tudo */
+  z-index: 80; /* acima de tudo */
   background: transparent;
   border: none;
   color: #fff;
@@ -178,7 +177,7 @@ background-image: url("/banner_mobile.webp");
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  
   transform: translateY(-8%); /* leve offset inicial para animação */
   opacity: 0;
   transition: transform 0.32s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.32s;
@@ -191,6 +190,15 @@ background-image: url("/banner_mobile.webp");
   opacity: 1;
   pointer-events: auto;
 }
+.monte_bravo_nav  {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    z-index: 75; /* acima do menu */
+  }
 
 .navMenu ul {
   list-style: none;
@@ -220,3 +228,112 @@ background-image: url("/banner_mobile.webp");
   border-radius: 4px;
 }
 
+/* Novas media queries para o Banner */
+@media (min-width: 768px) {
+  .containerBanner {
+    height: 90vh;
+    background-image: url("/banner_tablet.webp");
+  }
+
+  .simboloBanner {
+    height: 50vh;
+    transform: translate(-50%, -75%);
+  }
+
+  .btn {
+    top: 65%;
+    min-width: 190px;
+  }
+
+  .menuBtn {
+    font-size: 2.4rem;
+    top: 20px;
+    right: 20px;
+  }
+  div > .monte_bravo_nav  {
+    width: 400px;
+    height: 400px;
+    top: -90;
+    left: -90;
+    
+  }
+}
+
+@media (min-width: 1024px) {
+  .containerBanner {
+    height: 90vh;
+    background-image: url("/banner_desktop.webp");
+    background-position: center;
+  }
+
+  .simboloBanner {
+    height: 85vh;
+    width: 85vw;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+  }
+
+  .btn {
+    top: 75%;
+    width: 200px;
+  }
+  .btn span {
+    font-size: 0.9rem;
+    padding: 0.95rem;
+  }
+
+  /* overlay full-screen igual ao mobile, mas utiliza flex para posicionar os links à direita */
+  .navMenu {
+    position: fixed; /* full-screen overlay */
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex; /* mantém overlay flexível */
+    align-items: center; /* começa no topo */
+    justify-content: flex-end; /* empurra conteúdo para a direita */
+    padding: 2rem;
+    transform: translateY(-8%);
+    opacity: 0;
+    transition: transform 0.32s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.32s;
+    z-index: 70;
+    pointer-events: none;
+  }
+
+  .navMenu.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  div > .monte_bravo_nav  {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    
+    transform: translate(-10%, 25%);
+  }
+
+  .navMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* coluna */
+    gap: 0.6rem;
+    align-items: flex-end; /* alinha os itens à direita dentro do overlay */
+    text-align: right;
+  }
+
+  .navMenu li {
+    margin: 0;
+  }
+
+  .navMenu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 0.35rem 0.5rem;
+    display: inline-block;
+  }
+}

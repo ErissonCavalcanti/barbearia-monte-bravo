@@ -1,0 +1,133 @@
+/* Ficheiro: /styles/sobre.module.css (Mobile -> Tablet -> Desktop) */
+
+/* ==========================================================================
+   1. ESTILOS BASE (MOBILE FIRST) - Aplica-se a todos os tamanhos de ecrã
+   ========================================================================== */
+
+.sobre_Container {
+  display: flex;
+  flex-direction: column; /* Layout empilhado por padrão */
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 3px;
+}
+
+.video_Wrapper {
+  position: relative;
+  width: 100%;
+  height: 80vh; /* Altura para mobile */
+}
+
+.video_Element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.texto_Wrapper {
+  width: 100%;
+  padding: 2rem 1.5rem; /* Espaçamento para mobile */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sound_Button {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.sound_Button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.texto_Wrapper h1 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem; /* Tamanho de fonte base para mobile */
+}
+
+.texto_Wrapper h2 {
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  color: #555;
+  font-size: 1.1rem; /* Tamanho de fonte base para mobile */
+}
+.texto_Wrapper p {
+  font-size: 1rem; /* Tamanho de fonte base para mobile */
+  line-height: 2.5;
+  color: #030303;
+  font-family: "Cormorant Garamond", serif;
+  text-align: justify;
+}
+
+/* ==========================================================================
+   2. MEDIA QUERY PARA TABLETS
+   ========================================================================== */
+/* Aplica-se quando a largura do ecrã for 768px ou mais */
+
+@media (min-width: 768px) {
+  .sobre_Container {
+    flex-direction: row; /* Layout lado a lado */
+    min-height: 80vh;
+  }
+
+  .video_Wrapper,
+  .texto_Wrapper {
+    flex: 1; /* Divide o espaço 50/50 */
+    height: 80vh;
+  }
+
+  .texto_Wrapper {
+    padding: 2rem; /* Ajusta o espaçamento para tablet */
+    overflow-y: auto;
+  }
+
+  .texto_Wrapper h1 {
+    font-size: 2.2rem; /* Aumenta um pouco a fonte */
+  }
+
+  .texto_Wrapper h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   3. MEDIA QUERY PARA DESKTOPS E ECRÃS GRANDES
+   ========================================================================== */
+/* Aplica-se quando a largura do ecrã for 1024px ou mais */
+
+@media (min-width: 1024px) {
+     .video_Wrapper {
+     object-position: center center;
+     height: 98vh;
+  }
+  .texto_Wrapper {
+    padding: 3rem 4rem; /* Aumenta ainda mais o espaçamento para um look mais "arejado" */
+  }
+
+  .texto_Wrapper h1 {
+    font-size: 2.5rem; /* Aumenta o título principal */
+  }
+
+  .texto_Wrapper h2 {
+    font-size: 1.3rem; /* Aumenta o subtítulo */
+  }
+
+  .texto_Wrapper p {
+    font-size: 1.1rem; /* Aumenta o texto do parágrafo para melhor legibilidade */
+    line-height: 1.6;  /* Melhora o espaçamento entre linhas */
+  }
+}
