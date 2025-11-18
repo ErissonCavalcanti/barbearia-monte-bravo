@@ -168,12 +168,12 @@ export default function Banner() {
             </a>
           </li>
           <li>
-            <a href="#contato" onClick={handleLinkClick}>
+            <a href="#agendamento" onClick={handleLinkClick}>
               Contatos
             </a>
           </li>
           <li>
-            <a href="#agendamento" onClick={handleLinkClick}>
+            <a href="#contatos" onClick={handleLinkClick}>
               Agende
             </a>
           </li>

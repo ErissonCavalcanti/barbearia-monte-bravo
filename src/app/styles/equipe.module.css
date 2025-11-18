@@ -1,0 +1,208 @@
+.equipe {
+  text-align: center;
+  background-color: #fff;
+  position: relative;
+  z-index: 2; /* Camada 2, acima da seção 'sobre' (z-index: 1) */
+  
+  /* 
+    Isto força a criação de uma nova camada de composição, resolvendo
+    conflitos de z-index com a seção 'sobre' que contém um vídeo.
+  */
+  transform: translateZ(0);
+  
+  /* Permite que o pincel (filho) transborde visualmente para fora desta seção */
+  overflow: visible; 
+}
+
+.equipeContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.imagesColumn {
+  width: 100%;
+  min-width: 0;
+}
+
+.containerEquipe {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2px;
+  padding: 0 3px;
+}
+
+.cardEquipe {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+}
+
+.imgEquipe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: all 0.6s ease;
+  display: block;
+}
+
+.cardEquipe:hover .imgEquipe {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 10px;
+  color: white;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  transition: all 0.5s ease;
+}
+
+.overlay h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(0);
+  margin-bottom: 10px;
+}
+
+.cardEquipe:hover .overlay h4 {
+  transform: translateY(-10px);
+}
+
+.overlay p {
+  font-size: 0.9rem;
+  font-weight: 300;
+  padding-top: 10px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.cardEquipe:hover .overlay p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.overlay p::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.textColumn {
+  width: 100%;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  display: none;
+}
+
+.textColumn h2,
+.textColumn h3,
+.textColumn p {
+  margin: 0 0 1rem 0;
+  color: #030303;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.pincel_Equipe {
+  display: none;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@media (min-width: 768px) {
+  .equipeContent {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .imagesColumn {
+    flex: 0 0 50%;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .containerEquipe {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    height: 90vh;
+  }
+
+  .cardEquipe {
+    width: 45.8%;
+    height: 90vh;
+    padding: 0;
+  }
+
+  .imgEquipe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .textColumn {
+    display: flex;
+    flex: 0 0 50%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem;
+     line-height: 1.6;
+  }
+
+  .overlay h4 {
+    font-size: 1.5rem;
+  }
+
+  .overlay p {
+    font-size: 1.1rem;
+  }
+
+  .textColumn h2 {
+    font-size: 2.2rem;
+  }
+
+  .textColumn h3 {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #555;
+  }
+
+  .textColumn p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    text-align: justify;
+  }
+
+  /* --- REGRAS CORRIGIDAS PARA O PINCEL --- */
+  .pincel_Equipe {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 20%;
+    transform: translateY(-50%); /* Puxa o pincel para cima, centrando-o na junção */
+    width: 251px;
+    height: auto;
+    z-index: 5; /* z-index alto para ficar sobre o conteúdo de .equipe */
+    opacity: 0;
+  }
+}
