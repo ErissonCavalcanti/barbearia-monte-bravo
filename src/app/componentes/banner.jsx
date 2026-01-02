@@ -98,11 +98,8 @@ export default function Banner() {
 
   return (
     <header>
-      
-        <div
-         className={styles.containerBanner}
-      />
-      
+      <div className={styles.containerBanner} />
+
       <Image
         src={monte_bravo_banner}
         className={styles.simboloBanner}
@@ -147,13 +144,12 @@ export default function Banner() {
         role="navigation"
         aria-hidden={!isMenuOpen}
       >
-        <div >
+        <div>
           <Image
             className={styles.monte_bravo_nav}
             src={monte_bravo_nav}
             alt="Logo Barbearia Monte Bravo"
             title="Barbearia Monte Bravo"
-
           />
         </div>
         <ul>
@@ -173,22 +169,20 @@ export default function Banner() {
             </a>
           </li>
           <li>
-            <a href="#contatos" onClick={handleLinkClick}>
+            <a href="#marcacao" onClick={handleLinkClick}>
               Agende
             </a>
           </li>
         </ul>
       </nav>
 
-      {/* botão "Marque já" existente */}
-      <button
+      <a
+        href="#agendamento"
         ref={buttonRef}
-        className={`${styles.btn} ${styles["btn-3"]} ${styles["hover-border-5"]}`}
+        className={`${styles.botao} ${styles["btn-3"]} ${styles["hover-border-5"]}`}
       >
-        <span id="marcar-agendamento">
-          Marque já
-        </span>
-      </button>
+        <span>Marque já</span>
+      </a>
     </header>
   );
 }

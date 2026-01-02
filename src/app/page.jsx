@@ -1,7 +1,7 @@
 import Banner from './componentes/banner.jsx';
 import Equipe from './componentes/equipe.jsx';
 import Sobre from './componentes/sobre.jsx';
-
+import Marcacao from './componentes/marcacao.jsx';
 
 export default function Home() {
   return (
@@ -9,6 +9,7 @@ export default function Home() {
         <Banner />
         <Sobre />
         <Equipe />  
+        <Marcacao />
     </main>
   );
 }

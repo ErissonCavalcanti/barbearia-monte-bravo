@@ -92,7 +92,8 @@
   }
 
   .texto_Wrapper h1 {
-    font-size: 2.5rem;
+    padding-top: 15%;
+    font-size: 2.2rem;
   }
 
   .texto_Wrapper h2 {
@@ -100,7 +101,8 @@
   }
 
   .texto_Wrapper p {
-    font-size: 1.1rem;
+    text-align: justify;
+    font-size: 1.05rem;
     line-height: 1.6;
   }
 }

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -79,7 +80,7 @@ export default function Equipe() {
               <Image
                 src={Pantera}
                 alt="Foto de Pantera"
-                className={styles.imgEquipe}
+                className={`${styles.imgEquipe} ${styles.pantera}`} 
               />
               <div className={styles.overlay}>
                 <h4>Pantera</h4>
