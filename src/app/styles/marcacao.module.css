@@ -1,31 +1,231 @@
-.marcacao_title {
+.marcacao {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
-  padding: 20px 20px;
-  font-size: 1.5rem;
-  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 70px 20px 60px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 45%, #ffffff 0%, #f5f5f5 45%, #e6e6e6 100%);
   font-family: "Cormorant Garamond", serif;
-
 }
-  .marcacao_iframe {
-    padding-top: 10px;
-  }
+
+/* Copo: no telemóvel funciona como marca d'água por trás do título */
+.fundo_copo {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 0;
+  width: 120%;
+  max-width: 560px;
+  aspect-ratio: 1080 / 769;
+  background: url("/copo_mobile.webp") center / contain no-repeat;
+  opacity: 0.14;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* elementos da composição do desktop (escondidos em ecrãs menores) */
+.forma,
+.copo,
+.linhas,
+.circulo_claro,
+.circulo_escuro {
+  display: none;
+  position: absolute;
+}
+
+.cabecalho {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.rotulo {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+}
+
+.titulo {
+  margin-top: 10px;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #1a1a1a;
+}
+
+.linha {
+  width: 60px;
+  height: 1px;
+  margin: 20px 0;
+  background-color: #1a1a1a;
+  opacity: 0.4;
+}
+
+.subtitulo {
+  max-width: 320px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Cartão que "flutua" à frente do copo */
+.cartao {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 75vh;
+  min-height: 520px;
+  overflow: hidden;
+  border-radius: 14px;
+  background-color: #161312; /* mesma cor do widget da Noona */
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.3),
+    0 10px 20px -10px rgba(0, 0, 0, 0.15);
+}
+
+.marcacao_iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
 @media (min-width: 768px) {
-  .marcacao_iframe {
-    height: 90vh;
+  .marcacao {
+    padding: 90px 40px 80px;
+  }
+
+  .fundo_copo {
+    top: 20px;
+    width: 80%;
+    max-width: 700px;
+    aspect-ratio: 2048 / 1461;
+    background-image: url("/copo_tablet.webp");
+  }
+
+  .titulo {
+    font-size: 3rem;
+  }
+
+  .subtitulo {
+    max-width: none;
+  }
+
+  .cartao {
     width: 75%;
+    height: 80vh;
   }
 }
 
+/* Desktop: título e copo à esquerda, marcação à direita */
 @media (min-width: 1024px) {
-  .marcacao_title {
-    height: 100vh;
+  .marcacao {
+    display: grid;
+    grid-template-columns: 1fr minmax(420px, 560px);
+    column-gap: 6vw;
+    align-items: center;
+    padding: 80px 8vw;
   }
-  .marcacao_iframe {
-    height: 100%;
-    width: 50%;
+
+  /* composição por baixo do título: forma orgânica, copo e detalhes geométricos */
+  .fundo_copo {
+    top: auto;
+    bottom: 10%;
+    left: 6%;
+    width: 38%;
+    max-width: 640px;
+    aspect-ratio: 1.15;
+    background: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .forma,
+  .copo,
+  .linhas,
+  .circulo_claro,
+  .circulo_escuro {
+    display: block;
+  }
+
+  .forma {
+    top: 0;
+    left: 12%;
+    width: 76%;
+    height: 90%;
+    border-radius: 62% 38% 34% 66% / 48% 34% 66% 52%;
+    background-color: #e6e6e6;
+    transform: rotate(-8deg);
+  }
+
+  .copo {
+    top: 8%;
+    left: 2%;
+    width: 92%;
+    aspect-ratio: 1920 / 1369;
+    background: url("/copo_desktop.webp") center / contain no-repeat;
+    filter: sepia(0.35) saturate(0.8) brightness(0.97) contrast(0.95)
+      drop-shadow(0 18px 22px rgba(0, 0, 0, 0.18));
+  }
+
+  .linhas {
+    top: 34%;
+    right: 2%;
+    width: 17%;
+    height: 17px;
+    background: repeating-linear-gradient(to bottom, #2b2f36 0 3px, transparent 3px 7px);
+  }
+
+  .circulo_claro {
+    bottom: 6%;
+    left: 60%;
+    width: 12%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #d9dbe0;
+  }
+
+  .circulo_escuro {
+    bottom: -5%;
+    left: 62.5%;
+    width: 7%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #2b2f36;
+  }
+
+  .cabecalho {
+    align-self: start;
+    align-items: flex-start;
+    margin: 30px 0 0;
+    text-align: left;
+  }
+
+  .titulo {
+    font-size: 3.5rem;
+  }
+
+  .subtitulo {
+    max-width: 360px;
+  }
+
+  .linha {
+    margin-left: 0;
+  }
+
+  .cartao {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    height: 80vh;
   }
 }
