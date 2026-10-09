@@ -1,0 +1,45 @@
+/* Linha de altura zero entre as secções: o pote fica metade em cada uma */
+.divisoria {
+  display: none;
+}
+
+.pote {
+  position: absolute;
+  aspect-ratio: 1200 / 1141;
+  background: url("/pote-creme-tablet.webp") center / contain no-repeat;
+  filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+  visibility: hidden; /* o GSAP torna-o visível na animação */
+}
+
+@media (min-width: 768px) {
+  .divisoria {
+    display: block;
+    position: relative;
+    z-index: 10;
+    height: 0;
+  }
+
+  .pote {
+    top: -135px;
+    left: -70px;
+    width: 220px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pote {
+    top: -200px;
+    left: -100px;
+    width: 290px;
+    background-image: url("/pote-creme-desktop.webp");
+  }
+}
+
+@media (min-width: 1400px) {
+  .pote {
+    top: -215px;
+    left: -110px;
+    width: 320px;
+  }
+}
