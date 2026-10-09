@@ -2,6 +2,8 @@ import Banner from './componentes/banner.jsx';
 import Equipe from './componentes/equipe.jsx';
 import Sobre from './componentes/sobre.jsx';
 import Marcacao from './componentes/marcacao.jsx';
+import Footer from './componentes/footer.jsx';
+import Contatos from './componentes/contatos.jsx';
 
 export default function Home() {
   return (
@@ -10,6 +12,8 @@ export default function Home() {
         <Sobre />
         <Equipe />  
         <Marcacao />
+        <Contatos />
+        <Footer />
     </main>
   );
 }
