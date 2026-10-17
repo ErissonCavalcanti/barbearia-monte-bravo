@@ -148,93 +148,207 @@
     opacity 0s 0.3s;
 }
 
-/* MENU */
-.menu {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 2.5rem;
-  color: #fff;
-  z-index: 60;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.menuBtn {
+/* BOTÃO DO MENU: três traços de larguras diferentes que viram um X */
+.burger {
   position: absolute;
   top: 18px;
   right: 18px;
   z-index: 80;
-  background: transparent;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border: none;
-  color: #fff;
-  font-size: 2.2rem;
+  background: transparent;
   cursor: pointer;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
+.burger span {
+  position: absolute;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #fff;
+  transition: top 0.25s ease, left 0.25s ease, width 0.25s ease, transform 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.burger span:nth-child(1) {
+  top: 14px;
+  left: 18px;
+  width: 16px;
+}
+
+.burger span:nth-child(2) {
+  top: 21px;
+  left: 10px;
+  width: 24px;
+}
+
+.burger span:nth-child(3) {
+  top: 28px;
+  left: 10px;
+  width: 16px;
+}
+
+.burger:hover span:nth-child(1),
+.burger:hover span:nth-child(3) {
+  width: 24px;
+  left: 10px;
+}
+
+.burgerAberto span:nth-child(1),
+.burgerAberto span:nth-child(3) {
+  top: 21px;
+  left: 10px;
+  width: 24px;
+}
+
+.burgerAberto span:nth-child(1) {
+  transform: rotate(135deg);
+}
+
+.burgerAberto span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.burgerAberto span:nth-child(3) {
+  transform: rotate(-135deg);
+}
+
+/* MENU (a visibilidade e a entrada são controladas pelo GSAP) */
 .navMenu {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(-8%);
-  opacity: 0;
-  transition: transform 0.32s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.32s;
   z-index: 65;
-  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 20px 36px;
+  overflow: hidden;
+  background-color: #0b0b0b;
+  visibility: hidden;
 }
 
-.navMenu.open {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
+.menuLogo {
+  width: 150px;
 }
 
-.monte_bravo_nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  z-index: 75;
+.menuLogo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.navMenu ul {
+.menuLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
   list-style: none;
-  padding: 0;
-  margin: 0;
-  text-align: center;
 }
 
-.navMenu li {
-  margin: 0.6rem 0;
-}
-
-.navMenu a {
+.menuItem a {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 6px;
   color: #fff;
   text-decoration: none;
-  font-size: 1.25rem;
-  padding: 0.5rem 1rem;
+  transition: opacity 0.3s ease;
+}
+
+/* ao passar o rato num link, os outros ficam esbatidos */
+.menuLinks:hover .menuItem a {
+  opacity: 0.35;
+}
+
+.menuLinks:hover .menuItem a:hover {
+  opacity: 1;
+}
+
+/* linha fina que cresce a partir do centro por baixo do link */
+.menuItem a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #fff;
+  transform: scaleX(0);
+  transition: transform 0.35s ease;
+}
+
+.menuItem a:hover::after,
+.menuItem a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.menuNumero {
+  margin-top: 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: #7c808a;
+}
+
+/* máscara para o texto subir "de dentro" da linha */
+.menuMascara {
   display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.menuTexto {
+  display: inline-block;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* rodapé do menu: redes sociais e morada */
+.menuRodape {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.menuRodape p {
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #7c808a;
+}
+
+.menuRedes {
+  display: flex;
+  gap: 22px;
+  list-style: none;
+}
+
+.menuRedes a {
+  display: block;
+  color: #b4b8c2;
+  font-size: 17px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.menuRedes a:hover {
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 /* foco acessível */
-.menuBtn:focus-visible,
-.navMenu a:focus-visible,
+.burger:focus-visible,
+.menuItem a:focus-visible,
+.menuRedes a:focus-visible,
 .botao:focus-visible {
   outline: 3px solid rgba(255, 255, 255, 0.9);
   outline-offset: 4px;
@@ -256,6 +370,22 @@
   .botao {
     top: 65%;
     min-width: 190px;
+  }
+
+  .navMenu {
+    padding: 40px 40px 44px;
+  }
+
+  .menuLogo {
+    width: 190px;
+  }
+
+  .menuLinks {
+    gap: 22px;
+  }
+
+  .menuTexto {
+    font-size: 2.1rem;
   }
 }
 
