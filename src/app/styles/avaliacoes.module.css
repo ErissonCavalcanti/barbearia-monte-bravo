@@ -1,0 +1,269 @@
+.avaliacoes {
+  padding: 80px 24px;
+  background-color: #fafafa;
+  color: #1a1a1a;
+}
+
+/* Cabeçalho com a nota média */
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.rotulo {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+}
+
+.titulo {
+  margin-top: 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.nota {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+  padding: 12px 22px;
+  border: 1px solid #e3e3e3;
+  border-radius: 999px;
+  background-color: #fff;
+  text-align: left;
+}
+
+.notaValor {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.notaFonte {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  color: #6b6b6b;
+}
+
+/* Estrelas */
+.estrelas {
+  display: flex;
+  gap: 3px;
+  font-size: 15px;
+}
+
+.estrelaCheia {
+  color: #c9a24b;
+  display: inline-block;
+}
+
+.estrelaVazia {
+  color: #d9d9d9;
+}
+
+/* Carrossel: a janela recorta, o trilho desliza (movido pelo GSAP) */
+/* uma avaliação de cada vez, em todos os tamanhos de ecrã */
+.janela {
+  max-width: 720px;
+  margin: 0 auto;
+  /* espaço para a sombra e para o cartão subir no hover
+     (a margem negativa compensa o espaço extra em baixo) */
+  padding: 14px 0 75px;
+  margin-bottom: -35px;
+  overflow: hidden;
+}
+
+.trilho {
+  display: flex;
+  gap: 24px;
+  will-change: transform;
+}
+
+.cartao {
+  position: relative;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 36px 30px 30px;
+  overflow: hidden;
+  border-radius: 14px;
+  background-color: #fff;
+  box-shadow: 0 20px 45px -25px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* linha dourada no topo do cartão, que cresce no hover */
+.cartao::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #c9a24b;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s ease;
+}
+
+/* Interação ao passar o rato: o cartão sobe e ganha destaque */
+.janela:hover .cartao {
+  transform: translateY(-8px);
+  box-shadow: 0 32px 60px -25px rgba(0, 0, 0, 0.35);
+}
+
+.janela:hover .cartao::before {
+  transform: scaleX(1);
+}
+
+.janela:hover .aspas {
+  color: #ead9b4;
+  transform: rotate(-8deg) translateY(4px);
+}
+
+.janela:hover .inicial {
+  background-color: #c9a24b;
+}
+
+.aspas {
+  position: absolute;
+  top: -18px;
+  right: 22px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 9rem;
+  line-height: 1;
+  color: #f0ece4;
+  pointer-events: none;
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.texto {
+  position: relative;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: #2a2a2a;
+}
+
+.autor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid #eee;
+  font-family: "Inter", sans-serif;
+}
+
+.inicial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: background-color 0.4s ease;
+}
+
+.autor strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.autor small {
+  font-size: 0.72rem;
+  color: #8a8a8a;
+}
+
+/* Pontos de navegação */
+.navegacao {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.ponto {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background-color: #d0d0d0;
+  cursor: pointer;
+  transition: width 0.35s ease, background-color 0.35s ease;
+}
+
+.pontoAtivo {
+  width: 26px;
+  background-color: #1a1a1a;
+}
+
+/* Link para o Google */
+.rodape {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.link {
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.6;
+}
+
+@media (min-width: 768px) {
+  .avaliacoes {
+    padding: 100px 40px;
+  }
+
+  .titulo {
+    font-size: 3rem;
+  }
+
+  .cartao {
+    padding: 44px 40px 34px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .avaliacoes {
+    padding: 120px 8vw;
+  }
+
+  .titulo {
+    font-size: 3.5rem;
+  }
+}
