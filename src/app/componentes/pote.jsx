@@ -16,25 +16,22 @@ export default function Pote() {
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
-      const pote = poteRef.current;
-
-      // Entra pela esquerda, a rodar ligeiramente, acompanhando o scroll:
-      // começa quando o topo do pote aparece no fundo do ecrã e termina
-      // quando o fim da Marcação chega ao fundo do ecrã.
+      // Entra pela esquerda, a rodar ligeiramente, com duração fixa (não depende
+      // da velocidade do scroll): dispara quando o ponto a 40% da altura da secção
+      // Marcação chega ao meio do ecrã (um pouco antes da metade), e inverte ao voltar a subir.
       gsap.fromTo(
-        pote,
+        poteRef.current,
         { xPercent: -100, rotation: -25, autoAlpha: 0 },
         {
           xPercent: 0,
           rotation: 0,
           autoAlpha: 1,
-          ease: "power2.out",
+          duration: 2.2,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: divisoriaRef.current,
-            start: () => `top bottom+=${-pote.offsetTop}`,
-            end: "top bottom",
-            scrub: true,
-            invalidateOnRefresh: true, // recalcula se a janela mudar de tamanho
+            trigger: document.getElementById("agendamento"),
+            start: "40% center",
+            toggleActions: "play none none reverse",
           },
         }
       );
