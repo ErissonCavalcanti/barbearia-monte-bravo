@@ -5,13 +5,15 @@ import Marcacao from './componentes/marcacao.jsx';
 import Footer from './componentes/footer.jsx';
 import Contatos from './componentes/contatos.jsx';
 import Pote from './componentes/pote.jsx';
+import Servicos from './componentes/servicos.jsx';
 
 export default function Home() {
   return (
     <main>
         <Banner />
         <Sobre />
-        <Equipe />  
+        <Equipe />
+        <Servicos />
         <Marcacao />
         <Pote />
         <Contatos />

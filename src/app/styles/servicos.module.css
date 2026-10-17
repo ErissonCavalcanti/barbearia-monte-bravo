@@ -1,0 +1,231 @@
+.servicos {
+  padding: 80px 24px;
+  background-color: #111111;
+  color: #fff;
+}
+
+/* Cabeçalho */
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.rotulo {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #9a9ea8;
+}
+
+.titulo {
+  margin-top: 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.linha {
+  width: 60px;
+  height: 1px;
+  margin-top: 20px;
+  background-color: #fff;
+  opacity: 0.4;
+}
+
+/* Colunas de serviços */
+.colunas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 50px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.categoria {
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  list-style: none;
+}
+
+/* nome ........ preço */
+.linhaServico {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.nome {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.pontilhado {
+  flex: 1;
+  min-width: 20px;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
+  transform-origin: left center;
+}
+
+.preco {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.duracao {
+  display: block;
+  margin-top: 2px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a8e98;
+}
+
+/* Botão e nota */
+.rodape {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 55px;
+}
+
+/* Botão igual ao "Marque já" do banner: fundo claro, Cormorant Garamond
+   e uma borda branca que se desenha à volta ao passar o rato */
+.botao {
+  position: relative;
+  display: inline-block;
+  min-width: 200px;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.botao span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 20px;
+  background-color: rgb(247, 242, 242);
+  color: #000;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.botao::before,
+.botao::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 0%;
+  height: 0%;
+  opacity: 0;
+}
+
+.botao::before {
+  top: 0;
+  right: 0;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  transition: width 0.2s 0.5s ease-out, height 0.15s 0.35s linear, opacity 0s 0.7s;
+}
+
+.botao::after {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
+  transition: width 0.2s 0.15s linear, height 0.15s ease-in, opacity 0s 0.35s;
+}
+
+.botao:hover::before,
+.botao:hover::after,
+.botao:focus-visible::before,
+.botao:focus-visible::after {
+  width: 100%;
+  height: 96%;
+  opacity: 1;
+}
+
+.botao:hover::before,
+.botao:focus-visible::before {
+  transition: width 0.2s ease-in, height 0.15s 0.2s linear, opacity 0s;
+}
+
+.botao:hover::after,
+.botao:focus-visible::after {
+  transition: width 0.2s 0.35s linear, height 0.15s 0.5s ease-out, opacity 0s 0.3s;
+}
+
+.nota {
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  color: #8a8e98;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .servicos {
+    padding: 100px 40px;
+  }
+
+  .titulo {
+    font-size: 3rem;
+  }
+
+  .colunas {
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .servicos {
+    padding: 120px 8vw;
+  }
+
+  .titulo {
+    font-size: 3.5rem;
+  }
+
+  .colunas {
+    gap: 100px;
+  }
+
+  .nome {
+    font-size: 1.3rem;
+  }
+
+  .preco {
+    font-size: 1.35rem;
+  }
+
+  .botao span {
+    padding: 0.95rem;
+    font-size: 0.9rem;
+  }
+}
