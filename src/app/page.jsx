@@ -7,10 +7,14 @@ import Contatos from './componentes/contatos.jsx';
 import Pote from './componentes/pote.jsx';
 import Servicos from './componentes/servicos.jsx';
 import Avaliacoes from './componentes/avaliacoes.jsx';
+import Carregamento from './componentes/carregamento.jsx';
+import DadosEstruturados from './componentes/dadosEstruturados.jsx';
 
 export default function Home() {
   return (
     <main>
+        <DadosEstruturados />
+        <Carregamento />
         <Banner />
         <Sobre />
         <Equipe />
