@@ -1,0 +1,42 @@
+/* Ecrã de entrada por cima de todo o site */
+.ecra {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #0b0b0b;
+  /* segurança: se o JavaScript falhar, o ecrã desaparece sozinho */
+  animation: esconder 0.6s ease 8s forwards;
+}
+
+@keyframes esconder {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.logo {
+  /* o SVG tem margens internas: o desenho visível ocupa ~40% desta largura */
+  width: min(170vw, 1000px, 150vh);
+  aspect-ratio: 1050 / 600;
+  margin: -17vh 0 -14vh;
+}
+
+.logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.linha {
+  width: min(40vw, 160px);
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: scaleX(0);
+  transform-origin: left center;
+}

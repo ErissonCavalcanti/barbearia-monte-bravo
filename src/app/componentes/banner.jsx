@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { FaInstagram, FaFacebookF, FaWhatsapp } from "react-icons/fa";
-import monte_bravo_banner from "../../../public/monte_bravo_banner.webp";
 import styles from "../styles/banner.module.css";
 import monte_bravo_nav from "../../../public/monte_bravo_nav.svg";
 import { CONTACTO } from "../dados/contacto";
@@ -32,12 +31,12 @@ export default function Banner() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    // anima entrada inicial do botão "Marque já" e do ícone do menu
-    gsap.fromTo(
-      buttonRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power2.out" }
-    );
+    // anima a entrada do botão "Marque já" só depois do ecrã de carregamento sair
+    gsap.set(buttonRef.current, { opacity: 0, y: 20 });
+    const animarBotao = () =>
+      gsap.to(buttonRef.current, { opacity: 1, y: 0, duration: 1, delay: 0.2, ease: "power2.out" });
+    if (document.documentElement.dataset.carregado) animarBotao();
+    else window.addEventListener("monte-bravo:carregado", animarBotao, { once: true });
     gsap.fromTo(
       burgerRef.current,
       { opacity: 0, scale: 0.8 },
@@ -81,7 +80,10 @@ export default function Banner() {
         "-=0.4"
       );
 
-    return () => menuTl.current?.kill();
+    return () => {
+      menuTl.current?.kill();
+      window.removeEventListener("monte-bravo:carregado", animarBotao);
+    };
   }, []);
 
   // abre/fecha o menu: corre a timeline (mais rápida ao fechar) e bloqueia o scroll da página
@@ -89,8 +91,14 @@ export default function Banner() {
     const tl = menuTl.current;
     if (!tl) return;
 
-    if (isMenuOpen) tl.timeScale(1).play();
-    else tl.timeScale(1.8).reverse();
+    // acessibilidade: ao abrir, o foco vai para o primeiro link; ao fechar, volta ao botão
+    if (isMenuOpen) {
+      tl.timeScale(1).play();
+      setTimeout(() => menuRef.current?.querySelector("a")?.focus({ preventScroll: true }), 300);
+    } else {
+      if (tl.progress() > 0) burgerRef.current?.focus({ preventScroll: true });
+      tl.timeScale(1.8).reverse();
+    }
 
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
 
@@ -104,15 +112,29 @@ export default function Banner() {
   const handleLinkClick = () => setIsMenuOpen(false);
 
   return (
-    <header>
+    <header className={styles.header}>
       <div className={styles.containerBanner} />
 
-      <Image
-        src={monte_bravo_banner}
-        className={styles.simboloBanner}
-        alt="Logo Barbearia Monte Bravo"
-        title="Barbearia Monte Bravo"
-      />
+      {/* Logótipo (vetorial, nítido em qualquer ecrã) e botão, centrados numa coluna */}
+      <div className={styles.heroConteudo}>
+        {/* título principal da página: o logótipo */}
+        <h1 className={styles.marca}>
+          <Image
+            src={monte_bravo_nav}
+            className={styles.simboloBanner}
+            alt="Monte Bravo Barbershop"
+            priority
+          />
+        </h1>
+
+        <a
+          href="#agendamento"
+          ref={buttonRef}
+          className={`${styles.botao} ${styles["btn-3"]} ${styles["hover-border-5"]}`}
+        >
+          <span>Marque já</span>
+        </a>
+      </div>
 
       {/* Botão do menu: três traços que se transformam num X */}
       <button
@@ -168,14 +190,6 @@ export default function Banner() {
           <p>Av. Sá Carneiro, 32 · Bragança</p>
         </div>
       </nav>
-
-      <a
-        href="#agendamento"
-        ref={buttonRef}
-        className={`${styles.botao} ${styles["btn-3"]} ${styles["hover-border-5"]}`}
-      >
-        <span>Marque já</span>
-      </a>
     </header>
   );
 }
