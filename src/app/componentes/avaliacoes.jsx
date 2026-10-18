@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaStar, FaGoogle } from "react-icons/fa";
+import { FaStar, FaGoogle, FaPause, FaPlay } from "react-icons/fa";
 import { AVALIACOES, NOTA_GOOGLE } from "../dados/avaliacoes";
 import { MAPS_LINK } from "../dados/contacto";
 import styles from "../styles/avaliacoes.module.css";
@@ -14,7 +14,7 @@ const INTERVALO = 4000; // tempo (ms) que cada avaliação fica parada antes de 
 
 function Estrelas({ quantidade }) {
   return (
-    <div className={styles.estrelas} aria-label={`${quantidade} de 5 estrelas`}>
+    <div className={styles.estrelas} role="img" aria-label={`${quantidade} de 5 estrelas`}>
       {Array.from({ length: 5 }, (_, i) => (
         <FaStar key={i} className={i < quantidade ? styles.estrelaCheia : styles.estrelaVazia} />
       ))}
@@ -47,7 +47,9 @@ export default function Avaliacoes() {
   const secaoRef = useRef(null);
   const trilhoRef = useRef(null);
   const irParaRef = useRef(() => {});
+  const pausaRef = useRef(() => {});
   const [ativo, setAtivo] = useState(0);
+  const [pausado, setPausado] = useState(false);
 
   useEffect(() => {
     const secao = secaoRef.current;
@@ -57,6 +59,8 @@ export default function Avaliacoes() {
     let temporizador = null;
     let visivel = false;
     let ratoEmCima = false;
+    let focoDentro = false;
+    let pausaManual = false;
 
     // distância de um cartão (largura + espaço entre cartões)
     const passo = () =>
@@ -92,7 +96,7 @@ export default function Avaliacoes() {
     // só anda se a secção estiver visível e o rato não estiver sobre a avaliação
     const reiniciar = () => {
       parar();
-      if (visivel && !ratoEmCima) temporizador = setInterval(() => irPara(indice + 1), INTERVALO);
+      if (visivel && !ratoEmCima && !focoDentro && !pausaManual) temporizador = setInterval(() => irPara(indice + 1), INTERVALO);
     };
 
     // o carrossel passa sozinho enquanto a secção está visível no ecrã
@@ -135,6 +139,26 @@ export default function Avaliacoes() {
     janela.addEventListener("mouseenter", aoEntrar);
     janela.addEventListener("mouseleave", aoSair);
 
+    // também pausa enquanto o foco do teclado está dentro do carrossel
+    const aoFocar = () => {
+      focoDentro = true;
+      parar();
+    };
+    const aoDesfocar = (e) => {
+      if (secao.contains(e.relatedTarget)) return;
+      focoDentro = false;
+      reiniciar();
+    };
+    secao.addEventListener("focusin", aoFocar);
+    secao.addEventListener("focusout", aoDesfocar);
+
+    // botão pausar / retomar
+    pausaRef.current = () => {
+      pausaManual = !pausaManual;
+      setPausado(pausaManual);
+      reiniciar();
+    };
+
     const ctx = gsap.context(() => {
       const q = gsap.utils.selector(secao);
 
@@ -143,13 +167,13 @@ export default function Avaliacoes() {
         .timeline({ scrollTrigger: { trigger: secao, start: "top 75%" } })
         .from(q(`.${styles.cabecalho} > *`), {
           y: 25,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.8,
           stagger: 0.1,
           ease: "power3.out",
         })
-        .from(q(`.${styles.janela}`), { x: 60, autoAlpha: 0, duration: 0.9, ease: "power3.out" }, "-=0.4")
-        .from(q(`.${styles.navegacao}, .${styles.rodape}`), { autoAlpha: 0, duration: 0.6 }, "-=0.3");
+        .from(q(`.${styles.janela}`), { x: 60, opacity: 0, duration: 0.9, ease: "power3.out" }, "-=0.4")
+        .from(q(`.${styles.navegacao}, .${styles.rodape}`), { opacity: 0, duration: 0.6 }, "-=0.3");
     }, secao);
 
     // ao redimensionar a janela, reposiciona o trilho no cartão atual
@@ -161,6 +185,8 @@ export default function Avaliacoes() {
       observador.disconnect();
       janela.removeEventListener("mouseenter", aoEntrar);
       janela.removeEventListener("mouseleave", aoSair);
+      secao.removeEventListener("focusin", aoFocar);
+      secao.removeEventListener("focusout", aoDesfocar);
       ctx.revert();
       window.removeEventListener("resize", aoRedimensionar);
     };
@@ -197,6 +223,14 @@ export default function Avaliacoes() {
       </div>
 
       <div className={styles.navegacao}>
+        <button
+          type="button"
+          className={styles.pausa}
+          onClick={() => pausaRef.current()}
+          aria-label={pausado ? "Retomar a passagem das avaliações" : "Pausar a passagem das avaliações"}
+        >
+          {pausado ? <FaPlay aria-hidden="true" /> : <FaPause aria-hidden="true" />}
+        </button>
         {AVALIACOES.map((avaliacao, i) => (
           <button
             key={avaliacao.nome}

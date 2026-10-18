@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 70px 20px 60px;
+  padding: 72px 20px;
   overflow: hidden;
   background: radial-gradient(circle at 50% 45%, #ffffff 0%, #f5f5f5 45%, #e6e6e6 100%);
   font-family: "Cormorant Garamond", serif;
@@ -51,7 +51,7 @@
   font-weight: 500;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #8a8a8a;
+  color: #6b6b6b;
 }
 
 .titulo {
@@ -93,6 +93,17 @@
     0 10px 20px -10px rgba(0, 0, 0, 0.15);
 }
 
+/* mensagem mostrada antes de o widget da Noona carregar */
+.aCarregar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  color: #b4b8c2;
+}
+
 .marcacao_iframe {
   display: block;
   width: 100%;
@@ -101,7 +112,7 @@
 
 @media (min-width: 768px) {
   .marcacao {
-    padding: 90px 40px 80px;
+    padding: 80px 40px;
   }
 
   .fundo_copo {

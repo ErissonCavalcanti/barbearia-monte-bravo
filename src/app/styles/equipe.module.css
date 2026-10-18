@@ -24,6 +24,9 @@
 .imagesColumn {
   width: 100%;
   min-width: 0;
+  /* as fotos começam a animação 80px acima: o recorte impede que, invisíveis,
+     fiquem por cima da secção Sobre e bloqueiem o botão de pausa do vídeo */
+  overflow: hidden;
 }
 
 .containerEquipe {
@@ -68,7 +71,8 @@
   transition: all 0.5s ease;
 }
 
-.overlay h4 {
+.overlay .nome {
+  display: block;
   font-size: 1.2rem;
   font-weight: 600;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -76,7 +80,7 @@
   margin-bottom: 10px;
 }
 
-.cardEquipe:hover .overlay h4 {
+.cardEquipe:hover .overlay .nome {
   transform: translateY(-10px);
 }
 
@@ -112,8 +116,14 @@
   display: none;
 }
 
+.textColumn .citacao {
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+}
+
 .textColumn h2,
-.textColumn h3,
+.textColumn .citacao,
 .textColumn p {
   margin: 0 0 1rem 0;
   color: #030303;
@@ -145,12 +155,12 @@
     display: flex;
     flex-direction: row;
     gap: 2px;
-    height: 90vh;
+    height: 100vh;
   }
 
   .cardEquipe {
     width: 46.3%;
-    height: 90vh;
+    height: 100vh;
     padding: 0;
   }
 
@@ -173,7 +183,7 @@
      line-height: 1.6;
   }
 
-  .overlay h4 {
+  .overlay .nome {
     font-size: 1.5rem;
   }
 
@@ -185,7 +195,9 @@
     font-size: 2.2rem;
   }
 
-  .textColumn h3 {
+  .textColumn .citacao {
+    font-weight: 700;
+    text-align: center;
     font-size: 1.2rem;
     font-style: italic;
     color: #555;

@@ -1,5 +1,6 @@
 .avaliacoes {
-  padding: 80px 24px;
+  padding: 72px 24px;
+  overflow: hidden; /* a animação de entrada desliza o carrossel de fora do ecrã */
   background-color: #fafafa;
   color: #1a1a1a;
 }
@@ -19,7 +20,7 @@
   font-weight: 500;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #8a8a8a;
+  color: #6b6b6b;
 }
 
 .titulo {
@@ -195,29 +196,50 @@
 
 .autor small {
   font-size: 0.72rem;
-  color: #8a8a8a;
+  color: #6b6b6b;
 }
 
 /* Pontos de navegação */
 .navegacao {
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 10px;
 }
 
+.pausa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-right: 8px;
+  border: 1px solid #d0d0d0;
+  border-radius: 50%;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.pausa:hover {
+  border-color: #1a1a1a;
+}
+
 .ponto {
-  width: 8px;
-  height: 8px;
-  padding: 0;
+  width: 24px;
+  height: 24px;
+  padding: 8px;
   border: none;
   border-radius: 999px;
   background-color: #d0d0d0;
+  background-clip: content-box; /* só o centro (8x8) fica pintado */
   cursor: pointer;
   transition: width 0.35s ease, background-color 0.35s ease;
 }
 
 .pontoAtivo {
-  width: 26px;
+  width: 42px;
   background-color: #1a1a1a;
 }
 
@@ -245,8 +267,13 @@
 }
 
 @media (min-width: 768px) {
+  /* altura mínima de uma tela, com o conteúdo centrado */
   .avaliacoes {
-    padding: 100px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 80px 40px;
   }
 
   .titulo {
@@ -260,7 +287,7 @@
 
 @media (min-width: 1024px) {
   .avaliacoes {
-    padding: 120px 8vw;
+    padding: 80px 8vw;
   }
 
   .titulo {

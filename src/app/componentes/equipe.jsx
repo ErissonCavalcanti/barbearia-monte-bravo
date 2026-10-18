@@ -16,21 +16,29 @@ export default function Equipe() {
   const pincelRef = useRef(null);
 
   useEffect(() => {
-    const cards = equipeRef.current.querySelectorAll(`.${styles.cardEquipe}`);
-    gsap.from(cards, {
-      y: -80,
-      opacity: 0,
-      duration: 1.6,
-      stagger: 0.3,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: equipeRef.current,
-        start: "top 80%",
-        toggleActions: "restart none none reset",
-        scrub: false,
-        once: false,
-      },
-    });
+    // gsap.context + revert: ao desmontar (ou quando o React corre o efeito duas vezes
+    // em desenvolvimento) a animação anterior é desfeita, em vez de ficar duas a competir
+    const ctx = gsap.context(() => {
+      const cards = equipeRef.current.querySelectorAll(`.${styles.cardEquipe}`);
+      gsap.fromTo(
+        cards,
+        { y: -80, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.6,
+          stagger: 0.3,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: equipeRef.current,
+            start: "top 80%",
+            toggleActions: "restart none none reset",
+          },
+        }
+      );
+    }, equipeRef);
+
+    return () => ctx.revert();
   }, []);
 
   useEffect(() => {
@@ -67,10 +75,10 @@ export default function Equipe() {
                 src={Wellerson}
                 alt="Foto de Wellerson Viana"
                 className={styles.imgEquipe}
-                priority
+                sizes="(min-width: 768px) 25vw, 100vw"
               />
               <div className={styles.overlay}>
-                <h4>Wellerson Viana</h4>
+                <strong className={styles.nome}>Wellerson Viana</strong>
                 <p>Barbeiro e Proprietário</p>
               </div>
             </div>
@@ -79,10 +87,11 @@ export default function Equipe() {
               <Image
                 src={Pantera}
                 alt="Foto de Pantera"
-                className={`${styles.imgEquipe} ${styles.pantera}`} 
+                className={`${styles.imgEquipe} ${styles.pantera}`}
+                sizes="(min-width: 768px) 25vw, 100vw"
               />
               <div className={styles.overlay}>
-                <h4>Pantera</h4>
+                <strong className={styles.nome}>Pantera</strong>
                 <p>Barbeiro</p>
               </div>
             </div>
@@ -91,9 +100,9 @@ export default function Equipe() {
 
         <div className={styles.textColumn}>
           <h2 className="titulo-secao">Conheça nossa Equipa</h2>
-          <h3>
+          <p className={styles.citacao}>
             “Transformamos técnica em arte, para garantir a tua melhor versão.”
-          </h3>
+          </p>
           <p>
            Com anos de experiência no mercado, a nossa equipa é composta por profissionais que amam o que fazem. Cada um deles traz consigo uma bagagem única de competências e estilos, garantindo que cada cliente receba um atendimento personalizado e de alta qualidade. <br /><br />Seja para um corte clássico ou uma barba estilizada, estamos aqui para realçar o melhor de si.
            Os nossos profissionais participam regularmente em workshops e formações, mantendo-se sempre atualizados com as últimas tendências e técnicas do mercado. <br /> <br /> Convidamo-lo a experimentar não apenas um corte de cabelo, mas uma verdadeira experiência de cuidado e estilo.
@@ -101,12 +110,14 @@ export default function Equipe() {
         </div>
       </div>
 
-      {/* pincel animado — usar <img> para poder referenciar com ref */}
-      <img
-        src={pincel.src}
-        alt="pincel decorativo"
+      {/* pincel animado (decorativo); o Image do Next aceita ref para o GSAP */}
+      <Image
+        src={pincel}
+        alt=""
+        aria-hidden="true"
         ref={pincelRef}
         className={styles.pincel_Equipe}
+        sizes="251px"
       />
     </section>
   );

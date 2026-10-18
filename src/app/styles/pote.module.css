@@ -10,6 +10,7 @@
   filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.3));
   pointer-events: none;
   visibility: hidden; /* o GSAP torna-o visível na animação */
+  margin-top: -3vh; /* sobe o pote 3% da altura do ecrã */
 }
 
 @media (min-width: 768px) {

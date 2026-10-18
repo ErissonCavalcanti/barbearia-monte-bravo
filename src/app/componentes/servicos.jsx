@@ -21,7 +21,7 @@ export default function Servicos() {
       // cabeçalho e cada coluna entram quando a secção aparece no ecrã
       gsap.from(q(`.${styles.cabecalho} > *`), {
         y: 25,
-        autoAlpha: 0,
+        opacity: 0,
         duration: 0.8,
         stagger: 0.1,
         ease: "power3.out",
@@ -35,14 +35,14 @@ export default function Servicos() {
 
         tl.from(coluna.querySelector(`.${styles.categoria}`), {
           y: 20,
-          autoAlpha: 0,
+          opacity: 0,
           duration: 0.6,
           ease: "power3.out",
         })
           // os serviços aparecem um a um...
           .from(
             coluna.querySelectorAll(`.${styles.item}`),
-            { y: 20, autoAlpha: 0, duration: 0.6, stagger: 0.1, ease: "power3.out" },
+            { y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power3.out" },
             "-=0.3"
           )
           // ...e a linha pontilhada cresce até ao preço
@@ -55,7 +55,7 @@ export default function Servicos() {
 
       gsap.from(q(`.${styles.rodape}`), {
         y: 20,
-        autoAlpha: 0,
+        opacity: 0,
         duration: 0.8,
         ease: "power3.out",
         scrollTrigger: { trigger: q(`.${styles.rodape}`)[0], start: "top 90%" },

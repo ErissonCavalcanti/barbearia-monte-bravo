@@ -1,9 +1,31 @@
-import React from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/marcacao.module.css";
 
+const NOONA = "https://noona.pt/montebravobarbershop/book";
+
 export default function Marcacao() {
+  const secaoRef = useRef(null);
+  const [carregar, setCarregar] = useState(false);
+
+  // o widget da Noona (pesado e com cookies próprios) só é carregado
+  // quando a pessoa se aproxima da secção, e não logo ao abrir o site
+  useEffect(() => {
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (!entrada.isIntersecting) return;
+        setCarregar(true);
+        observador.disconnect();
+      },
+      { rootMargin: "600px 0px" }
+    );
+    observador.observe(secaoRef.current);
+    return () => observador.disconnect();
+  }, []);
+
   return (
-    <section className={styles.marcacao} id="agendamento">
+    <section ref={secaoRef} className={styles.marcacao} id="agendamento">
       {/* Imagem do copo como plano de fundo (decorativa) */}
       <div className={styles.fundo_copo} aria-hidden="true">
         {/* elementos da composição usados apenas no desktop */}
@@ -24,13 +46,16 @@ export default function Marcacao() {
       </header>
 
       <div className={styles.cartao}>
-        <iframe
-          className={styles.marcacao_iframe}
-          src="https://noona.pt/montebravobarbershop/book"
-          title="Marcação online - Monte Bravo Barbershop"
-          frameBorder="0"
-          loading="lazy"
-        ></iframe>
+        {carregar ? (
+          <iframe
+            className={styles.marcacao_iframe}
+            src={NOONA}
+            title="Marcação online - Monte Bravo Barbershop"
+            frameBorder="0"
+          ></iframe>
+        ) : (
+          <p className={styles.aCarregar}>A carregar a marcação online…</p>
+        )}
       </div>
     </section>
   );
