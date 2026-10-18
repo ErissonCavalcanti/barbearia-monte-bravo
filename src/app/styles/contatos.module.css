@@ -113,6 +113,7 @@
 
 .morada a {
   display: block;
+  padding: 4px 0; /* área de toque de pelo menos 24px entre morada e telefone */
   color: #fff;
   text-decoration: none;
 }
@@ -121,16 +122,95 @@
   text-decoration: underline;
 }
 
+/* Horário de funcionamento */
+.horario {
+  max-width: 320px;
+  margin: 28px auto 0;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  text-align: left;
+}
+
+.horarioCabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.estado {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  color: #b4b8c2;
+}
+
+/* bolinha de estado: cinzenta (fechado) ou verde (aberto) */
+.estado::before {
+  content: "";
+  position: static;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #8a8e98;
+}
+
+.estadoAberto {
+  color: #8fd19e;
+}
+
+.estadoAberto::before {
+  background-color: #4caf6a;
+  box-shadow: 0 0 0 3px rgba(76, 175, 106, 0.25);
+}
+
+.horario ul {
+  list-style: none;
+}
+
+.horario li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: #b4b8c2;
+}
+
+.horario li span:last-child {
+  text-align: right;
+  color: #fff;
+}
+
+/* dia de hoje destacado */
+.horario li.hoje {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-weight: 600;
+}
+
 .redes {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 50px;
+  gap: 4px;
+  margin-top: 30px;
   list-style: none;
 }
 
 .redes a {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px; /* área de toque confortável no telemóvel */
+  min-height: 44px;
   color: #fff;
   font-size: 19px;
   transition: transform 0.1s ease-in-out;
@@ -167,7 +247,6 @@
   padding: 6px 10px;
   border: none;
   border-bottom: 2px solid #d2cfd0;
-  outline: none;
   background-color: rgb(51, 51, 51);
   color: #fff;
   font-family: "Inter", sans-serif;

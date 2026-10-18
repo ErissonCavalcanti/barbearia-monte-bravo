@@ -5,12 +5,85 @@ import "leaflet/dist/leaflet.css";
 import styles from "../styles/contatos.module.css";
 import { PiEnvelopeSimpleLight, PiArrowLeftLight } from "react-icons/pi";
 import { FaInstagram, FaFacebookF, FaWhatsapp } from "react-icons/fa";
-import { CONTACTO, MAPS_LINK } from "../dados/contacto";
+import { CONTACTO, HORARIO, MAPS_LINK } from "../dados/contacto";
 
 const COORDENADAS = [41.8056038, -6.760175];
 
+// "09:30" -> "9h30"
+const formatarHora = (hora) => hora.replace(/^0/, "").replace(":", "h");
+
+// dia da semana (0 = domingo) e hora "HH:MM" atuais no fuso de Portugal
+function agoraEmPortugal() {
+  const partes = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Lisbon",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date());
+  const valor = (tipo) => partes.find((p) => p.type === tipo).value;
+  const dia = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(valor("weekday"));
+  return { dia, hora: `${valor("hour")}:${valor("minute")}` };
+}
+
+function Horario() {
+  // calculado só no browser (evita diferenças entre o servidor e o cliente)
+  const [agora, setAgora] = useState(null);
+
+  useEffect(() => {
+    const atualizar = () => setAgora(agoraEmPortugal());
+    atualizar();
+    const temporizador = setInterval(atualizar, 60000);
+    return () => clearInterval(temporizador);
+  }, []);
+
+  const linhaHoje = agora && HORARIO.find((linha) => linha.diasSemana.includes(agora.dia));
+  const abertoAgora =
+    linhaHoje?.periodos.some(([inicio, fim]) => agora.hora >= inicio && agora.hora < fim) ?? false;
+
+  return (
+    <div className={styles.horario}>
+      <div className={styles.horarioCabecalho}>
+        <span>Horário</span>
+        {agora && (
+          <span className={`${styles.estado} ${abertoAgora ? styles.estadoAberto : ""}`}>
+            {abertoAgora ? "Aberto agora" : "Fechado agora"}
+          </span>
+        )}
+      </div>
+      <ul>
+        {HORARIO.map((linha) => (
+          <li
+            key={linha.dias}
+            className={linha === linhaHoje ? styles.hoje : undefined}
+            aria-current={linha === linhaHoje ? "date" : undefined}
+          >
+            <span>{linha.dias}</span>
+            <span>
+              {linha.periodos.length
+                ? linha.periodos.map(([inicio, fim]) => `${formatarHora(inicio)} – ${formatarHora(fim)}`).join(" · ")
+                : "Fechado"}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function Contatos() {
   const [formAberto, setFormAberto] = useState(false);
+  const botaoMensagemRef = useRef(null);
+  const formAbertoAnterior = useRef(formAberto);
+
+  // acessibilidade: ao abrir o formulário o foco vai para o primeiro campo;
+  // ao fechar volta para o botão do envelope (só quando o estado muda de facto)
+  useEffect(() => {
+    if (formAbertoAnterior.current === formAberto) return;
+    formAbertoAnterior.current = formAberto;
+    if (formAberto) document.getElementById("contacto-nome")?.focus({ preventScroll: true });
+    else botaoMensagemRef.current?.focus({ preventScroll: true });
+  }, [formAberto]);
   const mapaRef = useRef(null);
 
   // cria o mapa com o logótipo como marcador (Leaflet só corre no browser)
@@ -89,6 +162,7 @@ export default function Contatos() {
 
           <button
             type="button"
+            ref={botaoMensagemRef}
             className={styles.botao_mensagem}
             onClick={() => setFormAberto(true)}
             aria-label="Enviar mensagem"
@@ -108,6 +182,8 @@ export default function Contatos() {
               <a href={`tel:${CONTACTO.telefone.replace(/\s/g, "")}`}>{CONTACTO.telefone}</a>
             )}
           </div>
+
+          <Horario />
 
           <ul className={styles.redes}>
             {CONTACTO.instagram && (
@@ -151,9 +227,12 @@ export default function Contatos() {
           <p className={styles.subtitulo}>Se tiver alguma dúvida ou sugestão, contacte-nos!</p>
 
           <form className={styles.form} onSubmit={enviarMensagem}>
-            <input name="nome" type="text" placeholder="Nome" required tabIndex={formAberto ? 0 : -1} />
-            <input name="email" type="email" placeholder="Email" required tabIndex={formAberto ? 0 : -1} />
-            <textarea name="mensagem" placeholder="Mensagem" rows={6} required tabIndex={formAberto ? 0 : -1} />
+            <label htmlFor="contacto-nome" className="sr-only">Nome</label>
+            <input id="contacto-nome" name="nome" type="text" autoComplete="name" placeholder="Nome" required tabIndex={formAberto ? 0 : -1} />
+            <label htmlFor="contacto-email" className="sr-only">Email</label>
+            <input id="contacto-email" name="email" type="email" autoComplete="email" placeholder="Email" required tabIndex={formAberto ? 0 : -1} />
+            <label htmlFor="contacto-mensagem" className="sr-only">Mensagem</label>
+            <textarea id="contacto-mensagem" name="mensagem" placeholder="Mensagem" rows={6} required tabIndex={formAberto ? 0 : -1} />
             <button
               type="submit"
               className={`${styles.botao_mensagem} ${styles.botao_enviar}`}
